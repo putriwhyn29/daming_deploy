@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Toko Album K-Pop</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      text-align: center;
+      padding: 50px;
+      color: #333;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🛍️ Pesan Paket Album K-Pop!</h2>
+
+  <form id="order-form">
+    <label for="name">Nama Kamu:</label>
+    <input type="text" id="name" required>
+
+    <label for="gender">Jenis Kelamin:</label>
+    <select id="gender" required>
+      <option value="male">Laki-laki</option>
+      <option value="female">Perempuan</option>
+    </select>
+
+    <label for="album">Pilih Paket Album:</label>
+    <select id="album" required>
+      <option value="paket1">Paket 1: Hot Sauce + Hello Future</option>
+      <option value="paket2">Paket 2: Glitch Mode</option>
+      <option value="paket3">Paket 3: ISTJ</option>
+      <option value="paket4">Paket 4: Sticker + Favorite</option>
+      <option value="paket5">Paket 5: Beatbox (Deluxe)</option>
+    </select>
+
+    <button type="submit">Cek Estimasi</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("order-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const gender = document.getElementById("gender").value;
+      const album = document.getElementById("album").value;
+
+      // Harga per paket
+      const hargaPaket = {
+        paket1: 350000,
+        paket2: 280000,
+        paket3: 300000,
+        paket4: 360000,
+        paket5: 400000
+      };
+
+      // Ambil nama paket dari text option
+      const albumSelect = document.getElementById("album");
+      const namaPaket = albumSelect.options[albumSelect.selectedIndex].text;
+
+      const harga = hargaPaket[album];
+
+      // Estimasi pengiriman (3–5 hari)
+      const shippingDays = Math.floor(Math.random() * 3) + 3;
+      const arrivalDate = new Date();
+      arrivalDate.setDate(arrivalDate.getDate() + shippingDays);
+      const arrivalStr = arrivalDate.toLocaleDateString("id-ID", {
+        weekday: "long", year: "numeric", month: "long", day: "numeric"
+      });
+
+      document.getElementById("result").innerHTML = `
+        <p>Halo, <strong>${name}</strong>!</p>
+        <p>Kamu memilih <strong>${namaPaket}</strong>.</p>
+        <p><strong>Harga:</strong> Rp ${harga.toLocaleString('id-ID')}</p>
+        <p><strong>Paket diperkirakan tiba:</strong> ${arrivalStr}</p>
+      `;
+    });
+  </script>
+
+</body>
+</html>
